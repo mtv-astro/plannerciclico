@@ -1,0 +1,5 @@
+[build]
+  publish = "landing-final"
+
+[build.environment]
+  NODE_VERSION = "20"
