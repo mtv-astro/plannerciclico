@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1400" fill="none">
+  <circle cx="700" cy="700" r="640" stroke="#7B5B99" stroke-width="6" opacity="0.95"/>
+  <circle cx="700" cy="700" r="560" stroke="#7B5B99" stroke-width="4.4" opacity="0.9"/>
+  <circle cx="700" cy="700" r="170" stroke="#7B5B99" stroke-width="2.2" opacity="0.82"/>
+  <g stroke="#7B5B99" stroke-width="2.8" opacity="0.92" stroke-linecap="butt">
+    <path d="M700.0 60.0L700.0 530.0"/>
+    <path d="M1020.0 145.7L785.0 552.8"/>
+    <path d="M1254.3 380.0L847.2 615.0"/>
+    <path d="M1340.0 700.0L870.0 700.0"/>
+    <path d="M1254.3 1020.0L847.2 785.0"/>
+    <path d="M1020.0 1254.3L785.0 847.2"/>
+    <path d="M700.0 1340.0L700.0 870.0"/>
+    <path d="M380.0 1254.3L615.0 847.2"/>
+    <path d="M145.7 1020.0L552.8 785.0"/>
+    <path d="M60.0 700.0L530.0 700.0"/>
+    <path d="M145.7 380.0L552.8 615.0"/>
+    <path d="M380.0 145.7L615.0 552.8"/>
+  </g>
+  <g fill="#7B5B99" font-family="Times New Roman, Georgia, DejaVu Serif, serif" font-size="46" text-anchor="middle" dominant-baseline="middle" opacity="0.98">
+    <text x="856.3" y="116.6">&#9800;&#xFE0E;</text>
+    <text x="1127.1" y="272.9">&#9801;&#xFE0E;</text>
+    <text x="1283.4" y="543.7">&#9802;&#xFE0E;</text>
+    <text x="1283.4" y="856.3">&#9803;&#xFE0E;</text>
+    <text x="1127.1" y="1127.1">&#9804;&#xFE0E;</text>
+    <text x="856.3" y="1283.4">&#9805;&#xFE0E;</text>
+    <text x="543.7" y="1283.4">&#9806;&#xFE0E;</text>
+    <text x="272.9" y="1127.1">&#9807;&#xFE0E;</text>
+    <text x="116.6" y="856.3">&#9808;&#xFE0E;</text>
+    <text x="116.6" y="543.7">&#9809;&#xFE0E;</text>
+    <text x="272.9" y="272.9">&#9810;&#xFE0E;</text>
+    <text x="543.7" y="116.6">&#9811;&#xFE0E;</text>
+  </g>
+</svg>
