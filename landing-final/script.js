@@ -28,46 +28,80 @@ const faqSearch = document.getElementById("faq-search");
 const faqEmpty = document.querySelector(".faq-empty");
 const salesCounter = document.querySelector(".sales-counter");
 const salesCounterValue = document.querySelector("[data-sales-value]");
-const salesCounterFill = document.querySelector("[data-sales-fill]");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-if (salesCounter && salesCounterValue && salesCounterFill) {
+if (salesCounter && salesCounterValue) {
   const total = Number(salesCounter.dataset.total || 0);
   const sold = Number(salesCounter.dataset.sold || 0);
   const safeTotal = total > 0 ? total : 1;
   const clampedSold = Math.max(0, Math.min(sold, safeTotal));
   const remaining = Math.max(0, safeTotal - clampedSold);
-  const soldRatio = (clampedSold / safeTotal) * 100;
+  const segmentSize = 360 / safeTotal;
+  const segmentGap = Math.min(0.8, segmentSize * 0.22);
+  const segmentFill = Math.max(0.6, segmentSize - segmentGap);
+  const animationStart = 100;
+  const duration = 900;
+  const rerunDelay = 9000;
+
+  const setRingFilled = (filledCount) => {
+    const filledSegments = [];
+    for (let index = 0; index < filledCount; index += 1) {
+      const start = index * segmentSize;
+      const end = start + segmentFill;
+      filledSegments.push(
+        `color-mix(in srgb, #d89f2f 96%, white) ${start}deg ${end}deg`,
+        `transparent ${end}deg ${(index + 1) * segmentSize}deg`
+      );
+    }
+
+    salesCounter.style.setProperty(
+      "--sales-ring-filled",
+      filledSegments.length
+        ? `conic-gradient(from 270deg, ${filledSegments.join(", ")})`
+        : "none"
+    );
+  };
 
   salesCounter.setAttribute(
     "aria-label",
-    `Faltam ${remaining} planners desta tiragem. Ver oferta.`
+    `Ultimas ${remaining} unidades disponiveis. Ver oferta.`
   );
+  salesCounter.style.setProperty("--sales-segment-size", `${segmentSize}deg`);
+  salesCounter.style.setProperty("--sales-segment-fill", `${segmentFill}deg`);
 
   if (reduceMotion) {
     salesCounterValue.textContent = String(remaining);
-    salesCounterFill.style.width = `${soldRatio}%`;
+    setRingFilled(clampedSold);
   } else {
-    let startTime = 0;
-    const duration = 900;
+    const runSalesCounterAnimation = () => {
+      let startTime = 0;
 
-    const tick = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      const currentValue = Math.round(remaining * progress);
-      salesCounterValue.textContent = String(currentValue);
+      const tick = (timestamp) => {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const currentValue = Math.round(
+          animationStart - (animationStart - remaining) * progress
+        );
+        const currentFilled = Math.max(0, Math.min(safeTotal - currentValue, clampedSold));
 
-      if (progress < 1) {
-        window.requestAnimationFrame(tick);
-      } else {
-        salesCounterValue.textContent = String(remaining);
-      }
+        salesCounterValue.textContent = String(currentValue);
+        setRingFilled(currentFilled);
+
+        if (progress < 1) {
+          window.requestAnimationFrame(tick);
+        } else {
+          salesCounterValue.textContent = String(remaining);
+          setRingFilled(clampedSold);
+          window.setTimeout(runSalesCounterAnimation, rerunDelay);
+        }
+      };
+
+      salesCounterValue.textContent = String(animationStart);
+      setRingFilled(0);
+      window.requestAnimationFrame(tick);
     };
 
-    window.requestAnimationFrame(tick);
-    window.setTimeout(() => {
-      salesCounterFill.style.width = `${soldRatio}%`;
-    }, 120);
+    runSalesCounterAnimation();
   }
 }
 
@@ -301,13 +335,9 @@ const updateScrollUI = () => {
     stickyBuy.style.pointerEvents = shouldHide ? "none" : "auto";
 
     if (whatsappFloat) {
-      const mobileLift = window.innerWidth <= 420 ? 142 : 134;
-      const restingBottom = window.innerWidth <= 420 ? 96 : 88;
-      const shouldLiftWhatsapp = !hasPassedHeroCta;
       whatsappFloat.style.opacity = "1";
       whatsappFloat.style.pointerEvents = "auto";
-      whatsappFloat.style.transform = shouldLiftWhatsapp ? `translateY(-${mobileLift}px)` : "translateY(0)";
-      whatsappFloat.style.bottom = `${restingBottom}px`;
+      whatsappFloat.style.transform = "translateY(0)";
     }
   }
 };
