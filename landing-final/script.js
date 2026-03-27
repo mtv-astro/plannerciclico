@@ -125,6 +125,7 @@ const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
 const isLowPowerViewport = window.innerWidth < 1100;
 const progressEl = document.querySelector(".scroll-progress");
 const stickyBuy = document.querySelector(".sticky-buy");
+const whatsappFloat = document.querySelector(".whatsapp-float");
 const investSection = document.getElementById("investimento");
 const heroPrimaryCta = document.querySelector(".hero-cta");
 let scrollRafId = 0;
@@ -254,6 +255,16 @@ const updateScrollUI = () => {
     stickyBuy.style.opacity = shouldHide ? "0" : "1";
     stickyBuy.style.transform = shouldHide ? "translateY(12px)" : "translateY(0)";
     stickyBuy.style.pointerEvents = shouldHide ? "none" : "auto";
+
+    if (whatsappFloat) {
+      const mobileLift = window.innerWidth <= 420 ? 142 : 134;
+      const restingBottom = window.innerWidth <= 420 ? 96 : 88;
+      const shouldLiftWhatsapp = !hasPassedHeroCta;
+      whatsappFloat.style.opacity = "1";
+      whatsappFloat.style.pointerEvents = "auto";
+      whatsappFloat.style.transform = shouldLiftWhatsapp ? `translateY(-${mobileLift}px)` : "translateY(0)";
+      whatsappFloat.style.bottom = `${restingBottom}px`;
+    }
   }
 };
 

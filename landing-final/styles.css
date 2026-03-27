@@ -564,6 +564,9 @@ h1 {
 
 .btn-hero {
   position: relative;
+  box-sizing: border-box;
+  max-width: 100%;
+  text-align: center;
   padding-inline: 36px 48px;
   white-space: nowrap;
 }
@@ -2542,7 +2545,11 @@ body.modal-open {
   box-shadow:
     0 10px 22px color-mix(in srgb, #128c7e 14%, transparent);
   isolation: isolate;
-  transition: transform 220ms var(--ease-soft), box-shadow 220ms var(--ease-soft), filter 220ms var(--ease-soft);
+  transition:
+    opacity 180ms var(--ease-soft),
+    transform 220ms var(--ease-soft),
+    box-shadow 220ms var(--ease-soft),
+    filter 220ms var(--ease-soft);
 }
 
 .whatsapp-float svg {
@@ -3166,6 +3173,7 @@ body.modal-open {
 
   .hero-cta {
     gap: 6px;
+    width: 100%;
     justify-content: stretch;
   }
 
@@ -3182,6 +3190,7 @@ body.modal-open {
   .btn-xl {
     width: 100%;
     min-height: 58px;
+    max-width: 100%;
   }
 
   .btn-hero {
@@ -3827,6 +3836,17 @@ body.modal-open {
 }
 
 @media (max-width: 520px) {
+  .btn-hero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: normal;
+    text-wrap: balance;
+    text-align: center;
+    line-height: 1.2;
+    padding: 16px 18px;
+  }
+
   .lead-break-preferred {
     white-space: normal;
     margin-right: 0;
@@ -3834,11 +3854,32 @@ body.modal-open {
 }
 
 @media (max-width: 420px) {
+  .hero-cta .btn-xl,
+  .btn-hero {
+    min-height: 56px;
+  }
+
+  .btn-hero {
+    padding: 15px 16px;
+    font-size: clamp(0.9rem, 4vw, 0.96rem);
+  }
+
   .lead {
     max-width: min(100%, calc(100vw - (var(--mobile-safe-gutter) * 2)));
     padding: 15px 14px 14px;
     font-size: clamp(0.88rem, 4.6vw, 0.96rem);
     line-height: 1.3;
+  }
+
+  .whatsapp-float {
+    right: 10px;
+    bottom: 96px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .whatsapp-float svg {
+    width: 44px;
   }
 }
 
