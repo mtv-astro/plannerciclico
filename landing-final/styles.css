@@ -1332,6 +1332,15 @@ body.modal-open {
   font-size: clamp(2.1rem, 4.2vw, 3.15rem);
 }
 
+.pattern-title-line {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
 .pattern-title::after {
   display: inline-flex;
 }
@@ -1449,6 +1458,16 @@ body.modal-open {
 .section-title-solution {
   max-width: 25ch;
   margin-bottom: 20px;
+}
+
+.solution-title-line {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .cards-solution {
@@ -2890,7 +2909,29 @@ body.modal-open {
   }
 
   #secao-2 .container {
-    padding-top: 0;
+    padding-top: 16px;
+  }
+
+  #secao-2 .quick-points-section {
+    display: none;
+  }
+
+  #secao-2 .pattern-header {
+    margin-top: 4px !important;
+    margin-bottom: 0 !important;
+  }
+
+  #secao-2 .pattern-title {
+    margin-bottom: 0 !important;
+  }
+
+  #secao-2 .pattern-title::after {
+    margin-top: 2px !important;
+    margin-bottom: -8px !important;
+  }
+
+  #secao-2 .pain-layout {
+    margin-top: -6px !important;
   }
 
   .section-title {
@@ -2920,6 +2961,17 @@ body.modal-open {
     margin-bottom: 8px;
     font-size: 0.72rem;
     letter-spacing: 0.12em;
+  }
+
+  #secao-3 .section-kicker {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  #secao-3 .section-title-solution {
+    max-width: none;
   }
 
   /* Hero */
