@@ -294,6 +294,82 @@ a {
   white-space: nowrap;
 }
 
+.sales-counter {
+  position: fixed;
+  right: 14px;
+  top: 96px;
+  z-index: 72;
+  display: grid;
+  gap: 4px;
+  width: min(158px, calc(100vw - 112px));
+  padding: 10px 11px 11px;
+  border-radius: 16px;
+  text-decoration: none;
+  color: inherit;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--surface) 94%, white), color-mix(in srgb, var(--surface-soft) 88%, white));
+  border: 1px solid color-mix(in srgb, var(--hero-card-border) 28%, transparent);
+  box-shadow:
+    0 16px 30px color-mix(in srgb, var(--lavender-shadow) 12%, transparent),
+    0 0 0 1px color-mix(in srgb, white 28%, transparent) inset;
+  backdrop-filter: blur(12px);
+  animation: sales-counter-breathe 3.4s ease-in-out infinite;
+}
+
+.sales-counter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 18% 18%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 28%),
+    radial-gradient(circle at 82% 26%, color-mix(in srgb, var(--mint) 14%, transparent), transparent 30%);
+  pointer-events: none;
+}
+
+.sales-counter-copy,
+.sales-counter-bar {
+  position: relative;
+  z-index: 1;
+}
+
+.sales-counter-copy {
+  display: grid;
+  gap: 2px;
+  font-family: var(--font-ui);
+  line-height: 1.1;
+}
+
+.sales-counter-value {
+  font-size: clamp(0.98rem, 1.3vw, 1.16rem);
+  font-weight: 800;
+  color: color-mix(in srgb, var(--brand-strong) 82%, var(--ink));
+}
+
+.sales-counter-text {
+  font-size: clamp(0.66rem, 0.9vw, 0.74rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: color-mix(in srgb, var(--ink) 84%, black);
+}
+
+.sales-counter-bar {
+  height: 6px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--line-soft) 58%, white);
+  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--bg-deep) 8%, transparent);
+}
+
+.sales-counter-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--brand) 0%, var(--accent) 55%, #d8b15b 100%);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 30%, transparent);
+  transition: width 820ms var(--ease-standard);
+}
+
 /* Hero */
 .hero {
   padding: 96px 0 62px;
@@ -2611,6 +2687,21 @@ body.modal-open {
   }
 }
 
+@keyframes sales-counter-breathe {
+  0%, 100% {
+    box-shadow:
+      0 16px 30px color-mix(in srgb, var(--lavender-shadow) 12%, transparent),
+      0 0 0 1px color-mix(in srgb, white 28%, transparent) inset;
+  }
+
+  50% {
+    box-shadow:
+      0 18px 34px color-mix(in srgb, var(--lavender-shadow) 15%, transparent),
+      0 0 0 1px color-mix(in srgb, white 34%, transparent) inset,
+      0 0 18px color-mix(in srgb, var(--accent) 12%, transparent);
+  }
+}
+
 @keyframes lead-soft-reveal {
   from {
     opacity: 0;
@@ -2858,6 +2949,21 @@ body.modal-open {
     background: color-mix(in srgb, var(--surface) 96%, transparent);
     padding-inline: 0;
     border-bottom: 1px solid color-mix(in srgb, var(--line-strong) 14%, transparent);
+  }
+
+  .sales-counter {
+    right: 12px;
+    top: 86px;
+    width: min(150px, calc(100vw - 96px));
+    padding: 9px 10px 10px;
+  }
+
+  .sales-counter-value {
+    font-size: 0.96rem;
+  }
+
+  .sales-counter-text {
+    font-size: 0.68rem;
   }
 
   .header-inner {
@@ -3735,6 +3841,21 @@ body.modal-open {
 
 /* Responsive: narrow mobile */
 @media (max-width: 560px) {
+  .sales-counter {
+    right: 10px;
+    top: 84px;
+    width: min(136px, calc(100vw - 94px));
+    padding: 8px 9px 9px;
+  }
+
+  .sales-counter-value {
+    font-size: 0.9rem;
+  }
+
+  .sales-counter-text {
+    font-size: 0.64rem;
+  }
+
   .header-inner {
     grid-template-columns: minmax(0, 1fr) auto;
     justify-items: stretch;
@@ -3854,6 +3975,21 @@ body.modal-open {
 }
 
 @media (max-width: 420px) {
+  .sales-counter {
+    right: 8px;
+    top: 82px;
+    width: min(126px, calc(100vw - 90px));
+    padding: 8px 8px 9px;
+  }
+
+  .sales-counter-value {
+    font-size: 0.86rem;
+  }
+
+  .sales-counter-text {
+    font-size: 0.6rem;
+  }
+
   .hero-cta .btn-xl,
   .btn-hero {
     min-height: 56px;
@@ -3888,6 +4024,10 @@ body.modal-open {
   * {
     animation: none !important;
     transition: none !important;
+  }
+
+  .sales-counter {
+    animation: none !important;
   }
 
   body::before {

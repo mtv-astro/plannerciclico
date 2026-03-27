@@ -26,7 +26,51 @@ faqItems.forEach((item) => {
 
 const faqSearch = document.getElementById("faq-search");
 const faqEmpty = document.querySelector(".faq-empty");
+const salesCounter = document.querySelector(".sales-counter");
+const salesCounterValue = document.querySelector("[data-sales-value]");
+const salesCounterFill = document.querySelector("[data-sales-fill]");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (salesCounter && salesCounterValue && salesCounterFill) {
+  const total = Number(salesCounter.dataset.total || 0);
+  const sold = Number(salesCounter.dataset.sold || 0);
+  const safeTotal = total > 0 ? total : 1;
+  const clampedSold = Math.max(0, Math.min(sold, safeTotal));
+  const remaining = Math.max(0, safeTotal - clampedSold);
+  const soldRatio = (clampedSold / safeTotal) * 100;
+
+  salesCounter.setAttribute(
+    "aria-label",
+    `Faltam ${remaining} planners desta tiragem. Ver oferta.`
+  );
+
+  if (reduceMotion) {
+    salesCounterValue.textContent = String(remaining);
+    salesCounterFill.style.width = `${soldRatio}%`;
+  } else {
+    let startTime = 0;
+    const duration = 900;
+
+    const tick = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const currentValue = Math.round(remaining * progress);
+      salesCounterValue.textContent = String(currentValue);
+
+      if (progress < 1) {
+        window.requestAnimationFrame(tick);
+      } else {
+        salesCounterValue.textContent = String(remaining);
+      }
+    };
+
+    window.requestAnimationFrame(tick);
+    window.setTimeout(() => {
+      salesCounterFill.style.width = `${soldRatio}%`;
+    }, 120);
+  }
+}
+
 if (faqSearch && faqItems.length && faqEmpty) {
   faqSearch.addEventListener("input", () => {
     const query = faqSearch.value.trim().toLowerCase();
