@@ -1,4 +1,7 @@
 ﻿:root {
+  --font-display: "Cormorant Garamond", serif;
+  --font-ui: "Montserrat", sans-serif;
+  --font-script: "Corinthia", cursive;
   --bg: #f1ece3;
   --bg-soft: #e8eff1;
   --bg-deep: #ddd7d1;
@@ -69,7 +72,7 @@ body {
 }
 
 body {
-  font-family: "Sora", sans-serif;
+  font-family: var(--font-ui);
   color: var(--ink);
   background:
     radial-gradient(circle at 8% 10%, color-mix(in srgb, var(--peach) 18%, transparent), transparent 100%),
@@ -206,10 +209,18 @@ body::before {
 h1,
 h2,
 h3 {
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-display);
   margin-top: 0;
   letter-spacing: -0.015em;
   line-height: 1.05;
+  font-weight: 500;
+}
+
+.font-script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 0.9;
 }
 
 a {
@@ -245,31 +256,34 @@ a {
   flex-direction: column;
   gap: 3px;
   text-decoration: none;
-  font-weight: 700;
   line-height: 1.05;
   flex: 1 1 auto;
   min-width: 0;
 }
 
 .brand-mark {
+  font-family: var(--font-display);
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-size: clamp(0.84rem, 1.06vw, 0.98rem);
 }
 
 .brand-subline {
+  font-family: var(--font-ui);
   font-size: clamp(0.68rem, 0.82vw, 0.76rem);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: none;
   color: color-mix(in srgb, var(--ink-muted) 88%, transparent);
 }
 
 .header-signature {
+  font-family: var(--font-display);
   flex: 0 0 auto;
   font-size: clamp(0.72rem, 0.9vw, 0.84rem);
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   color: color-mix(in srgb, var(--ink-muted) 84%, var(--ink) 16%);
   white-space: nowrap;
 }
@@ -345,6 +359,7 @@ a {
 }
 
 .hero-offer-strip strong {
+  font-family: var(--font-ui);
   font-size: 0.86rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -352,6 +367,7 @@ a {
 }
 
 .hero-offer-strip span {
+  font-family: var(--font-ui);
   font-size: 0.98rem;
   font-weight: 600;
   color: color-mix(in srgb, var(--ink) 92%, black);
@@ -363,14 +379,15 @@ a {
 }
 
 .eyebrow {
+  font-family: var(--font-ui);
   position: relative;
   display: inline-block;
   width: fit-content;
   max-width: max-content;
   margin: 0 0 14px -12px;
   padding: 9px 14px;
-  color: color-mix(in srgb, var(--lavender-shadow) 82%, var(--ink) 18%);
-  font-weight: 700;
+  color: color-mix(in srgb, var(--ink) 66%, var(--lavender-shadow) 34%);
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.8rem;
@@ -378,14 +395,15 @@ a {
   text-align: center;
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--surface) 90%, white) 0%,
-    color-mix(in srgb, var(--surface-lavender) 92%, white) 100%
+    color-mix(in srgb, white 58%, var(--surface-lavender) 42%) 0%,
+    color-mix(in srgb, var(--surface) 50%, var(--surface-lavender) 50%) 100%
   );
-  border: 1px solid color-mix(in srgb, var(--hero-card-border) 24%, transparent);
+  border: 1px solid color-mix(in srgb, var(--hero-card-border) 42%, var(--lavender-shadow) 58%);
   border-radius: 999px;
   box-shadow:
-    0 10px 18px color-mix(in srgb, var(--lavender-shadow) 10%, transparent),
-    0 0 0 1px color-mix(in srgb, white 26%, transparent) inset;
+    0 10px 18px color-mix(in srgb, var(--lavender-shadow) 12%, transparent),
+    0 0 0 1px color-mix(in srgb, white 34%, transparent) inset,
+    0 0 0 3px color-mix(in srgb, white 20%, transparent);
   justify-self: start;
 }
 
@@ -398,7 +416,7 @@ a {
 }
 
 h1 {
-  font-size: clamp(3.15rem, 6.3vw, 5.7rem);
+  font-size: clamp(2.85rem, 5.7vw, 5.05rem);
   margin-bottom: 4px;
   max-width: 15ch;
   line-height: 0.93;
@@ -454,10 +472,15 @@ h1 {
    - presença visual: background / border / box-shadow
    - "corte" serrilhado: clip-path */
 .lead {
+  font-family: var(--font-display);
   position: relative;
   color: color-mix(in srgb, var(--ink) 88%, black);
-  margin-left: 1px;
-  margin-top: 0;
+  justify-self: start;
+  align-self: start;
+  display: inline-block;
+  width: max-content;
+  max-width: none;
+  margin: 0 0 0 -52px;
   background: linear-gradient(
     180deg,
     #ead7bb 0%,
@@ -465,16 +488,25 @@ h1 {
   );
   border: 1px solid rgba(117, 80, 164, 0.34);
   border-radius: 10px;
-  padding: 24px 22px 22px;
-  max-width: 39ch;
-  font-size: 1.72rem;
+  padding: 28px 28px 26px;
+  font-size: 1.9rem;
   font-weight: 550;
-  line-height: 1.28;
+  line-height: 1.24;
   text-shadow: none;
   box-shadow: 0 14px 24px rgba(120, 110, 100, 0.14);
   /*transform: rotate(-1.5deg);*/
-  text-align: center;
+  text-align: left;
   overflow: hidden;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+.lead-line {
+  display: inline;
+  white-space: nowrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
 }
 
 .lead::before {
@@ -513,28 +545,11 @@ h1 {
 /* Destaque pontual dentro da subheadline.
    Se quiser mais visibilidade, mexa em height/background/opacity do ::before, não no texto inteiro. */
 .lead-emphasis {
-  position: relative;
-  display: inline-block;
-  padding: 0 0.16em;
-  color: #7550a4;
-  font-weight: 700;
-  z-index: 1;
-  isolation: isolate;
-  text-shadow: none;
+  color: inherit;
 }
 
 .lead-emphasis::before {
-  content: "";
-  position: absolute;
-  left: -0.2em;
-  right: -0.2em;
-  bottom: -0.12em;
-  height: 0.38em;
-  background: #b9cae3;
-  opacity: 0.82;
-  clip-path: polygon(0% 88%, 6% 12%, 100% 28%, 94% 100%);
-  z-index: -1;
-  box-shadow: 0 2px 6px rgba(111, 143, 184, 0.12);
+  content: none;
 }
 
 .hero-cta {
@@ -573,6 +588,7 @@ h1 {
 }
 
 .hero-cta-note {
+  font-family: var(--font-ui);
   margin: 0;
   font-size: 0.9rem;
   font-weight: 600;
@@ -2198,6 +2214,7 @@ body.modal-open {
   background: linear-gradient(135deg, var(--button-bg-soft) 0%, color-mix(in srgb, var(--button-bg) 78%, var(--mint-deep) 22%) 54%, color-mix(in srgb, var(--mint-shadow) 22%, var(--button-bg) 78%) 100%);
   color: var(--button-text);
   text-decoration: none;
+  font-family: "Montserrat", sans-serif;
   font-weight: 700;
   border: 1px solid color-mix(in srgb, var(--hero-card-border) 26%, transparent);
   transition: transform 180ms ease, filter 180ms ease, box-shadow 180ms ease;
@@ -2929,7 +2946,7 @@ body.modal-open {
     grid-area: copy;
     gap: 10px;
     width: 100%;
-    max-width: min(100%, 22.5rem);
+    max-width: min(100%, 27.5rem);
     justify-self: center;
     align-self: start;
     padding: 0;
@@ -2940,26 +2957,22 @@ body.modal-open {
 
   .hero-copy-card {
     gap: 0;
-    padding: 18px 9px 14px;
-    border-radius: 22px;
-    background:
-      linear-gradient(180deg, color-mix(in srgb, var(--surface) 96%, white), color-mix(in srgb, var(--surface-lavender) 90%, white)),
-      linear-gradient(120deg, color-mix(in srgb, var(--peach-soft) 18%, transparent), transparent);
-    border: 1px solid color-mix(in srgb, var(--hero-card-border) 18%, transparent);
-    box-shadow: 0 18px 32px color-mix(in srgb, var(--lavender-shadow) 10%, transparent);
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
   }
 
   .hero-support {
     grid-area: support;
     display: grid;
     width: 100%;
-    max-width: min(100%, 20.75rem);
+    max-width: min(100%, 27.5rem);
     justify-self: center;
-    padding: 0 6px 14px;
+    padding: 0 0 14px;
     border-radius: 0;
-    background:
-      linear-gradient(180deg, color-mix(in srgb, var(--surface) 96%, white), color-mix(in srgb, var(--surface-lavender) 90%, white)),
-      linear-gradient(120deg, color-mix(in srgb, var(--peach-soft) 18%, transparent), transparent);
+    background: transparent;
     border: 0;
     box-shadow: none;
   }
@@ -3018,18 +3031,36 @@ body.modal-open {
 
   .lead {
     margin: 0 auto;
-    max-width: 27ch;
-    padding: 0 2px;
-    background: transparent;
-    border: 0;
-    box-shadow: none;
-    font-size: clamp(1.04rem, 4.6vw, 1.16rem);
-    line-height: 1.5;
+    width: 100%;
+    max-width: min(100%, 27.5rem);
+    padding: 18px 16px 17px;
+    background: linear-gradient(
+      180deg,
+      #ead7bb 0%,
+      #dcc19a 100%
+    );
+    border: 1px solid rgba(117, 80, 164, 0.22);
+    box-shadow: 0 10px 18px rgba(120, 110, 100, 0.12);
+    font-size: clamp(0.95rem, 4.15vw, 1.14rem);
+    line-height: 1.26;
     text-align: center;
     transform: none;
   }
 
-  .lead::before,
+  .lead-line {
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+  }
+
+  .lead::before {
+    content: "";
+    top: -5px;
+    left: 50%;
+    width: 60px;
+    height: 8px;
+    transform: translateX(-50%);
+  }
+
   .lead::after {
     content: none;
   }
@@ -3076,7 +3107,7 @@ body.modal-open {
 
   .btn-hero {
     min-width: 0;
-    padding: 17px 22px;
+    padding: 17px 24px;
     font-size: clamp(0.94rem, 3.9vw, 1rem);
     white-space: nowrap;
   }
@@ -3086,10 +3117,7 @@ body.modal-open {
   }
 
   .hero-proof-points {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
-    margin-top: 20px;
+    display: none;
   }
 
   .hero-proof-points li {
@@ -3643,22 +3671,25 @@ body.modal-open {
 
   .hero-copy-stack {
     padding: 0;
-    max-width: min(100%, 21.5rem);
+    max-width: min(100%, 26.5rem);
   }
 
   .hero-copy-card {
-    padding: 16px 8px 12px;
-    border-radius: 18px;
+    padding: 0;
+    border-radius: 0;
   }
 
   .hero-support {
-    padding: 0 11px 12px;
+    padding: 0 0 12px;
     border-radius: 0;
   }
 
   .lead {
-    max-width: 24ch;
-    font-size: clamp(1rem, 4.9vw, 1.08rem);
+    width: 100%;
+    max-width: min(100%, 26.5rem);
+    padding: 17px 14px 16px;
+    font-size: clamp(0.92rem, 4.3vw, 1.02rem);
+    line-height: 1.24;
   }
 
   .hero-proof-points {
