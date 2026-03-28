@@ -24,8 +24,6 @@ faqItems.forEach((item) => {
   });
 });
 
-const faqSearch = document.getElementById("faq-search");
-const faqEmpty = document.querySelector(".faq-empty");
 const salesCounter = document.querySelector(".sales-counter");
 const salesCounterValue = document.querySelector("[data-sales-value]");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -103,22 +101,6 @@ if (salesCounter && salesCounterValue) {
 
     runSalesCounterAnimation();
   }
-}
-
-if (faqSearch && faqItems.length && faqEmpty) {
-  faqSearch.addEventListener("input", () => {
-    const query = faqSearch.value.trim().toLowerCase();
-    let visibleCount = 0;
-
-    faqItems.forEach((item) => {
-      const text = item.textContent?.toLowerCase() || "";
-      const visible = !query || text.includes(query);
-      item.hidden = !visible;
-      if (visible) visibleCount += 1;
-    });
-
-    faqEmpty.hidden = visibleCount > 0;
-  });
 }
 
 const interactiveChecklistItems = document.querySelectorAll(".check-list-interactive li");
@@ -326,10 +308,9 @@ const updateScrollUI = () => {
   if (progressEl) progressEl.style.width = `${Math.min(100, Math.max(0, progress))}%`;
 
   if (stickyBuy && investSection) {
-    const investTop = investSection.getBoundingClientRect().top;
     const ctaBottom = heroPrimaryCta?.getBoundingClientRect().bottom ?? Number.POSITIVE_INFINITY;
     const hasPassedHeroCta = ctaBottom < 0;
-    const shouldHide = !hasPassedHeroCta || investTop < window.innerHeight * 0.65;
+    const shouldHide = !hasPassedHeroCta;
     stickyBuy.style.opacity = shouldHide ? "0" : "1";
     stickyBuy.style.transform = shouldHide ? "translateY(12px)" : "translateY(0)";
     stickyBuy.style.pointerEvents = shouldHide ? "none" : "auto";
