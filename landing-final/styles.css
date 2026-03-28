@@ -420,8 +420,8 @@ a {
 /* Hero base: duas colunas no desktop, copy à esquerda e capa à direita. */
 .hero-grid {
   display: grid;
-  grid-template-columns: 1.25fr 0.75fr;
-  gap: 36px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 26px;
   align-items: center;
   position: relative;
   z-index: 2;
@@ -431,12 +431,12 @@ a {
    Use este translate apenas para microalinhamento; para espaçamento interno, prefira padding/margins locais. */
 .hero-content {
   color: var(--ink);
-  padding: 10px 26px 4px;
-  max-width: 700px;
+  padding: 10px 10px 4px 0;
+  max-width: 650px;
   margin: 0 auto;
-  transform: translateX(-24px);
+  transform: none;
   display: grid;
-  gap: 44px;
+  gap: 34px;
 }
 
 .hero-copy-stack {
@@ -590,10 +590,10 @@ h1 {
   color: color-mix(in srgb, var(--ink) 88%, black);
   justify-self: start;
   align-self: start;
-  display: inline-block;
+  display: inline-grid;
   width: max-content;
   max-width: none;
-  margin: 0 0 0 -52px;
+  margin: 0;
   background: linear-gradient(
     180deg,
     #ead7bb 0%,
@@ -601,14 +601,15 @@ h1 {
   );
   border: 1px solid rgba(117, 80, 164, 0.34);
   border-radius: 10px;
-  padding: 28px 28px 26px;
-  font-size: 1.9rem;
+  padding: 22px 24px 20px;
+  font-size: 1.74rem;
   font-weight: 550;
-  line-height: 1.24;
+  line-height: 1.16;
   text-shadow: none;
   box-shadow: 0 14px 24px rgba(120, 110, 100, 0.14);
   /*transform: rotate(-1.5deg);*/
-  text-align: left;
+  justify-items: center;
+  text-align: center;
   overflow: hidden;
   word-break: normal;
   overflow-wrap: normal;
@@ -616,10 +617,17 @@ h1 {
 }
 
 .lead-line {
-  display: inline;
+  display: block;
+  width: max-content;
+  margin-left: auto;
+  margin-right: auto;
   white-space: nowrap;
   word-break: keep-all;
   overflow-wrap: normal;
+}
+
+.lead-line + .lead-line {
+  margin-top: 0.08em;
 }
 
 .lead::before {
@@ -841,7 +849,7 @@ h1 {
    Mesmo sem "card" visual, ele ainda é útil como área de interação e reserva de altura. */
 .hero-visual {
   position: relative;
-  min-height: 560px;
+  min-height: 500px;
   border-radius: 0;
   background: transparent;
   border: 0;
@@ -861,11 +869,11 @@ h1 {
 .planner-image-cover {
   position: absolute;
   display: block;
-  width: 500px;
+  width: 430px;
   max-width: none;
   height: auto;
-  left: -10px;
-  top: -18px;
+  left: 8px;
+  top: 8px;
   object-fit: contain;
   border-radius: 18px;
   opacity: 1;
@@ -3308,6 +3316,9 @@ body.modal-open {
 
   .lead-line {
     display: inline;
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
     white-space: normal;
     letter-spacing: -0.01em;
   }
