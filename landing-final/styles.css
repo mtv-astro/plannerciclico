@@ -1490,6 +1490,31 @@ body.modal-open {
   color: var(--ink);
 }
 
+.pain-break-focus .pattern-shift-line {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.5em;
+}
+
+.pain-break-focus .pattern-shift-line + br {
+  display: none;
+}
+
+.pain-break-focus .pattern-shift-line:last-of-type {
+  margin-bottom: 0;
+}
+
+.pattern-shift-mobile-break {
+  display: none;
+}
+
+.pattern-shift-tail {
+  display: inline;
+}
+
 .pain-break-focus .pattern-shift-headline strong {
   position: relative;
   display: inline-block;
@@ -1581,6 +1606,9 @@ body.modal-open {
 .section-title-solution {
   max-width: 25ch;
   margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .solution-title-line {
@@ -2616,8 +2644,9 @@ body.modal-open {
 
 .sticky-buy strong {
   display: block;
-  font-size: 1.12rem;
-  line-height: 1.1;
+  font-size: 1.64rem;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
 }
 
 .sticky-buy small {
@@ -2649,7 +2678,7 @@ body.modal-open {
 }
 
 .sticky-buy-copy {
-  flex: 0 1 460px;
+  flex: 1 1 520px;
 }
 
 .sticky-buy .btn-sm {
@@ -3355,11 +3384,13 @@ body.modal-open {
 
   .hero-offer-strip strong {
     font-size: 0.7rem;
+    text-align: center;
   }
 
   .hero-offer-strip span {
     font-size: 0.88rem;
     line-height: 1.3;
+    text-align: center;
   }
 
   .hero-cta {
@@ -3522,7 +3553,19 @@ body.modal-open {
 
   .pain-flow-card,
   .pain-break-focus {
-    padding: 14px 12px;
+    padding: 6px 4.5px;
+  }
+
+  .pain-break-focus {
+    width: min(100%, 30rem);
+    max-width: calc(100vw - (var(--mobile-safe-gutter) * 1.15));
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .pain-break-focus .pattern-shift-headline {
+    font-size: clamp(1.14rem, 4.6vw, 1.3rem) !important;
+    line-height: 1.16;
   }
 
   .pain-flow-kicker {
@@ -3875,14 +3918,14 @@ body.modal-open {
   }
 
   .sticky-buy strong {
-    font-size: 1rem;
-    line-height: 1.1;
-    letter-spacing: 0.01em;
+    font-size: 1.14rem;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
   }
 
   .sticky-buy small {
     display: flex;
-    font-size: 0.88rem;
+    font-size: 0.76rem;
     line-height: 1.25;
     color: color-mix(in srgb, var(--ink-muted) 86%, var(--ink) 14%);
   }
@@ -4038,11 +4081,11 @@ body.modal-open {
   }
 
   .sticky-buy strong {
-    font-size: 0.92rem;
+    font-size: 1.04rem;
   }
 
   .sticky-buy small {
-    font-size: 0.82rem;
+    font-size: 0.7rem;
   }
 
   .sticky-buy .btn-sm {
@@ -4102,6 +4145,28 @@ body.modal-open {
     padding: 15px 12px 14px;
     font-size: clamp(1rem, 5.15vw, 1.08rem);
     line-height: 1.3;
+  }
+
+  .pain-break-focus .pattern-shift-line {
+    white-space: normal;
+    width: auto;
+  }
+
+  .pain-break-focus {
+    max-width: calc(100vw - 8px);
+  }
+
+  .pain-break-focus .pattern-shift-headline {
+    font-size: clamp(1rem, 4.4vw, 1.12rem) !important;
+    line-height: 1.14;
+  }
+
+  .pattern-shift-mobile-break {
+    display: block;
+  }
+
+  .pain-break-focus .pattern-shift-tail {
+    white-space: nowrap;
   }
 
   .whatsapp-float {
