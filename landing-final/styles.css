@@ -4155,27 +4155,28 @@ body.legal-modal-open {
   }
 
   .testimonials-carousel {
-    --testimonials-visible: 2;
-    width: calc(100% + 96px);
-    margin-inline: -48px;
+    --testimonials-visible: 1;
+    width: calc(100% + 36px);
+    margin-inline: -18px;
     padding-inline: 0;
   }
 
   .testimonials-arrow {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
   }
 
   .testimonials-arrow-prev {
-    left: -50px;
+    left: -22px;
   }
 
   .testimonials-arrow-next {
-    right: -50px;
+    right: -22px;
   }
 
   .testimonial-slide img {
-    max-height: 520px;
+    width: min(100%, 460px);
+    max-height: 680px;
   }
 
   .offer-box h2,
