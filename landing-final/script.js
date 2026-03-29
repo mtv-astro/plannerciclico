@@ -227,10 +227,18 @@ if (testimonialsCarousel && testimonialsTrack && testimonialSlides.length) {
     );
   };
 
+  const getVisibleTestimonials = () => {
+    const visible = parseFloat(
+      window.getComputedStyle(testimonialsCarousel).getPropertyValue("--testimonials-visible")
+    );
+    return Number.isFinite(visible) && visible > 0 ? visible : 1;
+  };
+
   const renderTestimonialSlide = (index, instant = false) => {
     testimonialIndex = index;
+    const visibleTestimonials = getVisibleTestimonials();
     testimonialsTrack.style.transition = instant ? "none" : testimonialsTransition;
-    testimonialsTrack.style.transform = `translateX(-${testimonialIndex * 100}%)`;
+    testimonialsTrack.style.transform = `translateX(-${testimonialIndex * (100 / visibleTestimonials)}%)`;
     updateTestimonialsLabel();
   };
 
@@ -300,6 +308,7 @@ if (testimonialsCarousel && testimonialsTrack && testimonialSlides.length) {
   renderTestimonialSlide(1, true);
   void testimonialsTrack.offsetHeight;
   testimonialsTrack.style.transition = testimonialsTransition;
+  window.addEventListener("resize", () => renderTestimonialSlide(testimonialIndex, true));
   restartTestimonialsTimer();
 }
 
