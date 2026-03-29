@@ -200,6 +200,109 @@ if (showcasePhoto && showcaseInteractiveCards.length) {
   restartShowcaseTimer();
 }
 
+const testimonialsCarousel = document.querySelector("[data-testimonials-carousel]");
+const testimonialsTrack = document.querySelector("[data-testimonials-track]");
+const testimonialPrevButton = document.querySelector("[data-testimonial-prev]");
+const testimonialNextButton = document.querySelector("[data-testimonial-next]");
+const testimonialSlides = Array.from(document.querySelectorAll(".testimonial-slide"));
+
+if (testimonialsCarousel && testimonialsTrack && testimonialSlides.length) {
+  const testimonialsTransition = "transform 420ms var(--ease-standard)";
+  const firstClone = testimonialSlides[0].cloneNode(true);
+  const lastClone = testimonialSlides[testimonialSlides.length - 1].cloneNode(true);
+  testimonialsTrack.insertBefore(lastClone, testimonialsTrack.firstChild);
+  testimonialsTrack.appendChild(firstClone);
+
+  const totalTestimonials = testimonialSlides.length;
+  let testimonialIndex = 1;
+  let testimonialTimerId = 0;
+  let isTestimonialsPointerDown = false;
+  let isTestimonialsJumping = false;
+
+  const updateTestimonialsLabel = () => {
+    const realIndex = ((testimonialIndex - 1 + totalTestimonials) % totalTestimonials) + 1;
+    testimonialsCarousel.setAttribute(
+      "aria-label",
+      `Carrossel de depoimentos. Slide ${realIndex} de ${totalTestimonials}.`
+    );
+  };
+
+  const renderTestimonialSlide = (index, instant = false) => {
+    testimonialIndex = index;
+    testimonialsTrack.style.transition = instant ? "none" : testimonialsTransition;
+    testimonialsTrack.style.transform = `translateX(-${testimonialIndex * 100}%)`;
+    updateTestimonialsLabel();
+  };
+
+  const jumpTestimonialsTo = (index) => {
+    isTestimonialsJumping = true;
+    renderTestimonialSlide(index, true);
+    void testimonialsTrack.offsetHeight;
+    testimonialsTrack.style.transition = testimonialsTransition;
+    isTestimonialsJumping = false;
+  };
+
+  const restartTestimonialsTimer = () => {
+    if (testimonialTimerId) window.clearInterval(testimonialTimerId);
+    if (reduceMotion || totalTestimonials < 2 || isTestimonialsPointerDown) return;
+    testimonialTimerId = window.setInterval(() => {
+      renderTestimonialSlide(testimonialIndex + 1);
+    }, 8000);
+  };
+
+  testimonialPrevButton?.addEventListener("click", () => {
+    renderTestimonialSlide(testimonialIndex - 1);
+    restartTestimonialsTimer();
+  });
+
+  testimonialNextButton?.addEventListener("click", () => {
+    renderTestimonialSlide(testimonialIndex + 1);
+    restartTestimonialsTimer();
+  });
+
+  testimonialsCarousel.addEventListener("mouseenter", () => {
+    if (testimonialTimerId) window.clearInterval(testimonialTimerId);
+  });
+
+  testimonialsCarousel.addEventListener("mouseleave", () => {
+    restartTestimonialsTimer();
+  });
+
+  const pauseTestimonialsWhilePressed = () => {
+    isTestimonialsPointerDown = true;
+    if (testimonialTimerId) window.clearInterval(testimonialTimerId);
+  };
+
+  const resumeTestimonialsAfterPress = () => {
+    if (!isTestimonialsPointerDown) return;
+    isTestimonialsPointerDown = false;
+    restartTestimonialsTimer();
+  };
+
+  testimonialsCarousel.addEventListener("pointerdown", pauseTestimonialsWhilePressed);
+  testimonialsCarousel.addEventListener("pointerup", resumeTestimonialsAfterPress);
+  testimonialsCarousel.addEventListener("pointercancel", resumeTestimonialsAfterPress);
+  testimonialsCarousel.addEventListener("pointerleave", resumeTestimonialsAfterPress);
+
+  testimonialsTrack.addEventListener("transitionend", () => {
+    if (isTestimonialsJumping) return;
+
+    if (testimonialIndex === 0) {
+      jumpTestimonialsTo(totalTestimonials);
+      return;
+    }
+
+    if (testimonialIndex === totalTestimonials + 1) {
+      jumpTestimonialsTo(1);
+    }
+  });
+
+  renderTestimonialSlide(1, true);
+  void testimonialsTrack.offsetHeight;
+  testimonialsTrack.style.transition = testimonialsTransition;
+  restartTestimonialsTimer();
+}
+
 const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
 const isLowPowerViewport = window.innerWidth < 1100;
 const progressEl = document.querySelector(".scroll-progress");
