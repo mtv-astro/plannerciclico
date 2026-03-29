@@ -26,6 +26,7 @@ faqItems.forEach((item) => {
 
 const salesCounter = document.querySelector(".sales-counter");
 const salesCounterValue = document.querySelector("[data-sales-value]");
+const stickyBuyCount = document.querySelector(".sticky-buy-count");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 if (salesCounter && salesCounterValue) {
@@ -102,6 +103,24 @@ if (salesCounter && salesCounterValue) {
     runSalesCounterAnimation();
   }
 }
+
+const fitStickyBuyCount = () => {
+  if (!stickyBuyCount) return;
+  stickyBuyCount.style.fontSize = "";
+  const rootFont = parseFloat(window.getComputedStyle(document.documentElement).fontSize) || 16;
+  let currentFont = parseFloat(window.getComputedStyle(stickyBuyCount).fontSize);
+  const minFontRem = 0.52;
+  let guard = 0;
+
+  while (stickyBuyCount.scrollWidth > stickyBuyCount.clientWidth && currentFont / rootFont > minFontRem && guard < 20) {
+    currentFont -= 0.3;
+    stickyBuyCount.style.fontSize = `${(currentFont / rootFont).toFixed(3)}rem`;
+    guard += 1;
+  }
+};
+
+fitStickyBuyCount();
+window.addEventListener("resize", fitStickyBuyCount);
 
 const interactiveChecklistItems = document.querySelectorAll(".check-list-interactive li");
 if (interactiveChecklistItems.length) {
