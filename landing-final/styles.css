@@ -357,8 +357,8 @@ a {
 
 .sales-counter-copy {
   display: grid;
-  gap: 2px;
-  width: auto;
+  gap: 3px;
+  width: fit-content;
   max-width: 100%;
   font-family: var(--font-ui);
   line-height: 1.02;
@@ -370,7 +370,7 @@ a {
   position: relative;
   z-index: 1;
   margin: 0 auto;
-  transform: translateY(-1.5px);
+  transform: translate(1.5px, 1px);
 }
 
 .sales-counter-value {
@@ -386,7 +386,7 @@ a {
 
 .sales-counter-text {
   display: block;
-  width: auto;
+  width: fit-content;
   margin: 0 auto;
   font-size: 0.6rem;
   font-weight: 700;
@@ -902,6 +902,10 @@ body.modal-open {
   overflow: visible;
 }
 
+body.legal-modal-open {
+  overflow: hidden;
+}
+
 .mockup-lightbox {
   position: fixed;
   inset: 0;
@@ -946,6 +950,78 @@ body.modal-open {
   display: block;
   object-fit: contain;
   border-radius: 12px;
+}
+
+.legal-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 190;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: color-mix(in srgb, var(--bg-deep) 46%, transparent);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms var(--ease-standard);
+}
+
+.legal-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.legal-modal-panel {
+  position: relative;
+  width: min(920px, 100%);
+  height: min(82vh, 820px);
+  border-radius: 22px;
+  border: 1px solid color-mix(in srgb, var(--line-strong) 22%, transparent);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--surface) 94%, white), color-mix(in srgb, var(--surface-lavender) 86%, white));
+  box-shadow:
+    0 34px 70px color-mix(in srgb, var(--lavender-shadow) 22%, transparent),
+    0 0 42px color-mix(in srgb, var(--lavender) 12%, transparent);
+  padding: 22px 22px 18px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 14px;
+  transform: translateY(12px) scale(0.98);
+  transition: transform 260ms var(--ease-standard);
+}
+
+.legal-modal.is-open .legal-modal-panel {
+  transform: translateY(0) scale(1);
+}
+
+.legal-modal-title {
+  margin: 0;
+  padding-right: 48px;
+  font-size: clamp(1.4rem, 2.3vw, 2rem);
+  line-height: 1.02;
+}
+
+.legal-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-soft) 88%, white);
+  color: var(--ink);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 10px 18px color-mix(in srgb, var(--lavender-shadow) 12%, transparent);
+}
+
+.legal-modal-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 16px;
+  background: white;
 }
 
 /* Shared sections */
@@ -1773,7 +1849,7 @@ body.modal-open {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center 42%;
   filter: saturate(0.92) contrast(0.98) brightness(1.01);
   opacity: 1;
   transition: opacity 560ms var(--ease-soft);
@@ -2294,6 +2370,28 @@ body.modal-open {
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--mint) 18%, transparent);
 }
 
+.offer-mockups {
+  width: min(100%, 38rem);
+  margin: 10px auto 8px;
+  padding: 6px 5px 4px;
+  border-radius: 22px;
+  border: 1px solid color-mix(in srgb, var(--hero-card-border) 20%, transparent);
+  background:
+    radial-gradient(circle at 18% 18%, color-mix(in srgb, var(--accent-soft) 34%, transparent), transparent 34%),
+    linear-gradient(155deg, color-mix(in srgb, var(--surface) 96%, white), color-mix(in srgb, var(--surface-lavender) 86%, white));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 72%, transparent),
+    0 14px 28px color-mix(in srgb, var(--lavender-shadow) 10%, transparent);
+}
+
+.offer-mockup-single {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  filter: drop-shadow(0 20px 36px color-mix(in srgb, var(--lavender-shadow) 16%, transparent));
+}
+
 .offer-box small {
   display: block;
   margin-top: 12px;
@@ -2352,7 +2450,7 @@ body.modal-open {
 /* Footer */
 .site-footer {
   border-top: 1px solid color-mix(in srgb, var(--star) 12%, transparent);
-  padding: 26px 0;
+  padding: 26px 0 138px;
 }
 
 .footer-inner {
@@ -3029,6 +3127,34 @@ body.modal-open {
   .planner-image-cover {
     transition: none !important;
   }
+
+  .legal-modal {
+    padding: 14px;
+  }
+
+  .legal-modal-panel {
+    width: 100%;
+    height: min(84vh, 760px);
+    padding: 18px 14px 14px;
+    border-radius: 18px;
+  }
+
+  .legal-modal-title {
+    padding-right: 42px;
+    font-size: clamp(1.18rem, 5vw, 1.46rem);
+  }
+
+  .legal-modal-close {
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.35rem;
+  }
+
+  .legal-modal-frame {
+    border-radius: 12px;
+  }
 }
 
 /* Mobile conversion overrides */
@@ -3039,7 +3165,7 @@ body.modal-open {
 
   /* Global layout */
   body {
-    padding-bottom: 156px;
+    padding-bottom: 0;
   }
 
   .container {
@@ -3858,6 +3984,12 @@ body.modal-open {
     margin-top: 6px;
   }
 
+  .offer-mockups {
+    width: min(100%, 31rem);
+    padding: 6px 5px 4px;
+    border-radius: 20px;
+  }
+
   .offer-box h2,
   .offer-box p,
   .benefits-copy,
@@ -3934,7 +4066,7 @@ body.modal-open {
     min-height: 54px;
     padding: 14px 18px;
     width: auto;
-    min-width: 160px;
+    min-width: 220px;
     white-space: normal;
     text-align: center;
     flex: 0 0 auto;
@@ -3952,6 +4084,10 @@ body.modal-open {
     flex-direction: column;
     gap: 8px;
     text-align: center;
+  }
+
+  .site-footer {
+    padding-bottom: 122px;
   }
 
   .footer-links {
@@ -3984,6 +4120,12 @@ body.modal-open {
 
   .sales-counter-text {
     font-size: 0.5rem;
+  }
+
+  .offer-mockups {
+    width: min(100%, 22rem);
+    padding: 5px 5px 3px;
+    border-radius: 18px;
   }
 
   .header-inner {
@@ -4081,8 +4223,12 @@ body.modal-open {
   }
 
   .sticky-buy .btn-sm {
-    min-width: 148px;
-    padding: 12px 16px;
+    min-width: 204px;
+    padding: 12px 22px;
+  }
+
+  .site-footer {
+    padding-bottom: 112px;
   }
 }
 

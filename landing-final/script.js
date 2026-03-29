@@ -33,11 +33,11 @@ if (salesCounter && salesCounterValue) {
   const sold = Number(salesCounter.dataset.sold || 0);
   const safeTotal = total > 0 ? total : 1;
   const clampedSold = Math.max(0, Math.min(sold, safeTotal));
-  const remaining = Math.max(0, safeTotal - clampedSold);
+  const soldPercent = Math.round((clampedSold / safeTotal) * 100);
   const segmentSize = 360 / safeTotal;
   const segmentGap = Math.min(0.8, segmentSize * 0.22);
   const segmentFill = Math.max(0.6, segmentSize - segmentGap);
-  const animationStart = 100;
+  const animationStart = 0;
   const duration = 900;
   const rerunDelay = 9000;
 
@@ -62,13 +62,13 @@ if (salesCounter && salesCounterValue) {
 
   salesCounter.setAttribute(
     "aria-label",
-    `Ultimas ${remaining} unidades disponiveis. Ver oferta.`
+    `${soldPercent} por cento vendidos. Ver oferta.`
   );
   salesCounter.style.setProperty("--sales-segment-size", `${segmentSize}deg`);
   salesCounter.style.setProperty("--sales-segment-fill", `${segmentFill}deg`);
 
   if (reduceMotion) {
-    salesCounterValue.textContent = String(remaining);
+    salesCounterValue.textContent = `${soldPercent}%`;
     setRingFilled(clampedSold);
   } else {
     const runSalesCounterAnimation = () => {
@@ -78,23 +78,23 @@ if (salesCounter && salesCounterValue) {
         if (!startTime) startTime = timestamp;
         const progress = Math.min((timestamp - startTime) / duration, 1);
         const currentValue = Math.round(
-          animationStart - (animationStart - remaining) * progress
+          animationStart + (soldPercent - animationStart) * progress
         );
-        const currentFilled = Math.max(0, Math.min(safeTotal - currentValue, clampedSold));
+        const currentFilled = Math.max(0, Math.min(Math.round((currentValue / 100) * safeTotal), clampedSold));
 
-        salesCounterValue.textContent = String(currentValue);
+        salesCounterValue.textContent = `${currentValue}%`;
         setRingFilled(currentFilled);
 
         if (progress < 1) {
           window.requestAnimationFrame(tick);
         } else {
-          salesCounterValue.textContent = String(remaining);
+          salesCounterValue.textContent = `${soldPercent}%`;
           setRingFilled(clampedSold);
           window.setTimeout(runSalesCounterAnimation, rerunDelay);
         }
       };
 
-      salesCounterValue.textContent = String(animationStart);
+      salesCounterValue.textContent = `${animationStart}%`;
       setRingFilled(0);
       window.requestAnimationFrame(tick);
     };
@@ -261,6 +261,11 @@ if (painFlowCards.length) {
 
 const plannerMockup = document.querySelector(".planner-image-cover");
 const mockupLightbox = document.getElementById("mockup-lightbox");
+const legalModal = document.getElementById("legal-modal");
+const legalModalFrame = document.getElementById("legal-modal-frame");
+const legalModalTitle = document.getElementById("legal-modal-title");
+const legalModalClose = document.getElementById("legal-modal-close");
+const legalModalLinks = document.querySelectorAll("[data-legal-modal]");
 const openMockupLightbox = () => {
   if (!mockupLightbox) return;
   mockupLightbox.hidden = false;
@@ -281,6 +286,31 @@ const closeMockupLightbox = () => {
   }, 260);
 };
 
+const openLegalModal = (href, title) => {
+  if (!legalModal || !legalModalFrame || !legalModalTitle) return;
+  legalModalTitle.textContent = title || "Informações";
+  legalModalFrame.src = href;
+  legalModal.hidden = false;
+  requestAnimationFrame(() => {
+    legalModal.classList.add("is-open");
+    legalModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("legal-modal-open");
+  });
+};
+
+const closeLegalModal = () => {
+  if (!legalModal || !legalModalFrame) return;
+  legalModal.classList.remove("is-open");
+  legalModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("legal-modal-open");
+  window.setTimeout(() => {
+    if (!legalModal.classList.contains("is-open")) {
+      legalModal.hidden = true;
+      legalModalFrame.src = "about:blank";
+    }
+  }, 220);
+};
+
 if (plannerMockup && mockupLightbox) {
   plannerMockup.addEventListener("click", openMockupLightbox);
   plannerMockup.addEventListener("keydown", (event) => {
@@ -298,6 +328,31 @@ if (plannerMockup && mockupLightbox) {
     if (event.key !== "Escape") return;
     if (!mockupLightbox.classList.contains("is-open")) return;
     closeMockupLightbox();
+  });
+}
+
+if (legalModal && legalModalFrame && legalModalLinks.length) {
+  legalModalLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const href = link.getAttribute("href");
+      const title = link.getAttribute("data-legal-modal") || link.textContent?.trim() || "Informações";
+      if (!href) return;
+      event.preventDefault();
+      openLegalModal(href, title);
+    });
+  });
+
+  legalModalClose?.addEventListener("click", closeLegalModal);
+
+  legalModal.addEventListener("click", (event) => {
+    if (event.target !== legalModal) return;
+    closeLegalModal();
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    if (!legalModal.classList.contains("is-open")) return;
+    closeLegalModal();
   });
 }
 
